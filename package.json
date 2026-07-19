@@ -1,7 +1,6 @@
 {
   "name": "studygenius-backend",
   "version": "1.0.0",
-  // "main": "api/index.ts",
   "scripts": {
     "dev": "ts-node --project tsconfig.json server.ts",
     "build": "",
