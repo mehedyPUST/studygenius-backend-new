@@ -34,7 +34,7 @@ app.use("/api/contact", contactRoutes);
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 app.use(errorHandler);
 
-// Vercel serverless entrypoint
-export default function handler(req: any, res: any) {
+// ✅ Vercel Node.js runtime (CommonJS) expects `module.exports`
+export = function handler(req: any, res: any) {
     return app(req, res);
-}
+};
