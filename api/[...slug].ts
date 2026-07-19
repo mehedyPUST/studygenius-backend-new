@@ -16,6 +16,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+// Connect to MongoDB (serverless‑safe)
 app.use(async (req, _res, next) => {
     try {
         await connectToDB();
@@ -34,7 +35,7 @@ app.use("/api/contact", contactRoutes);
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 app.use(errorHandler);
 
-// ✅ Vercel Node.js runtime (CommonJS) expects `module.exports`
-export = function handler(req: any, res: any) {
-    return app(req, res);
-};
+// ✅ Catch‑all serverless function export
+export default function handler(req: any, res: any) {
+    app(req, res);
+}
