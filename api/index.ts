@@ -12,14 +12,10 @@ import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
 
-app.use(cors({
-    origin: true,
-    credentials: true,
-}));
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Connect to DB on every request (serverless‑safe)
 app.use(async (req, _res, next) => {
     try {
         await connectToDB();
@@ -35,12 +31,10 @@ app.use("/api/ai", aiRoutes);
 app.use("/api/progress", progressRoutes);
 app.use("/api/saved", savedRoutes);
 app.use("/api/contact", contactRoutes);
-
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
-
 app.use(errorHandler);
 
-// ✅ Serverless function handler
+// Vercel serverless entrypoint
 export default function handler(req: any, res: any) {
     return app(req, res);
 }
